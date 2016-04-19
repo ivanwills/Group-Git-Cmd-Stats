@@ -10,6 +10,7 @@ use strict;
 use version;
 use Moose::Role;
 use Carp;
+use List::Util qw/max/;
 use Data::Dumper qw/Dumper/;
 use English qw/ -no_match_vars /;
 use File::chdir;
@@ -28,13 +29,19 @@ my $opt = Getopt::Alt->new(
         },
     },
     [
-        'min|min-commits|m=i',
-        'name|n',
-        'no_release|no-release',
+        'by_email|by-email|e',
+        'by_name|by-name|n',
+        'by_date|by-date|d',
         'verbose|v+',
         'quiet|q!',
     ]
 );
+
+sub start_start {
+    $opt->process;
+
+    return;
+}
 
 my $collected = {};
 sub stats {
@@ -69,6 +76,24 @@ sub stats {
 
 sub stats_end {
     DumpFile('stats.yml', $collected);
+
+    my $type = $opt->opt->by_email ? 'email'
+        : $opt->opt->by_name       ? 'name'
+        : $opt->opt->by_date       ? 'date'
+        :                            '';
+
+    my %stats;
+    for my $repo (keys %{ $collected }) {
+        for my $item (keys %{ $collected->{$repo}{$type} }) {
+            $stats{$item} += $collected->{$repo}{$type}{$item};
+        }
+    }
+
+    my @items = sort { $stats{$a} <=> $stats{$b} } keys %stats;
+    my $max   = max map {length $_} @items;
+    for my $item (@items) {
+        printf "%-${max}s %d\n", $item, $stats{$item};
+    }
 
     return;
 }
