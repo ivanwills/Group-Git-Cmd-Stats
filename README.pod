@@ -1,13 +1,12 @@
 =begin html
 
-<a href="https://travis-ci.org/ivanwills/Group-Git-Cmd-Todo?branch=master"><img src="https://travis-ci.org/ivanwills/Group-Git-Cmd-Todo.png?branch=master" alt="Group-Git-Cmd-Todo"></a>
-<a href="https://coveralls.io/r/ivanwills/Group-Git-Cmd-Todo?branch=master"><img src="https://coveralls.io/repos/ivanwills/Group-Git-Cmd-Todo/badge.svg?branch=master" alt="Coverage Status" /></a>
+<a href="https://travis-ci.org/ivanwills/Group-Git-Cmd-Stats?branch=master"><img src="https://travis-ci.org/ivanwills/Group-Git-Cmd-Stats.png?branch=master" alt="Group-Git-Cmd-Stats"></a>
+<a href="https://coveralls.io/r/ivanwills/Group-Git-Cmd-Stats?branch=master"><img src="https://coveralls.io/repos/ivanwills/Group-Git-Cmd-Stats/badge.svg?branch=master" alt="Coverage Status" /></a>
 
-=head1 Group::Git::Cmd::Todo
+=head1 Group::Git::Cmd::Stats
 
-Adds the sub-command C<todo> to C<group-git>, it concatenates all the
-C<TODO.md> files so you can view a summary of tasks to to accross all
-repositories.
+Adds the stats command to L<Group::Git> which allows you to collect statistics
+accross many repositories.
 
 =head1 INSTALLATION
 
@@ -23,24 +22,24 @@ To install this module, run the following commands:
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc Group::Git::Cmd::Todo
+    perldoc Group::Git::Cmd::Stats
 
 You can also look for information at:
 
     RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Group-Git-Cmd-Todo
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Group-Git-Cmd-Stats
 
     AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Group-Git-Cmd-Todo
+        http://annocpan.org/dist/Group-Git-Cmd-Stats
 
     CPAN Ratings
-        http://cpanratings.perl.org/d/Group-Git-Cmd-Todo
+        http://cpanratings.perl.org/d/Group-Git-Cmd-Stats
 
     Search CPAN
-        http://search.cpan.org/dist/Group-Git-Cmd-Todo/
+        http://search.cpan.org/dist/Group-Git-Cmd-Stats/
 
     Source Code
-        git://github.com/ivanwills/Group-Git-Cmd-Todo.git
+        git://github.com/ivanwills/Group-Git-Cmd-Stats.git
 
 =head1 COPYRIGHT AND LICENCE
 
