@@ -15,6 +15,7 @@ use English qw/ -no_match_vars /;
 use File::chdir;
 use Path::Tiny;
 use Getopt::Alt;
+use YAML::Syck;
 
 our $VERSION = version->new('0.0.2');
 
@@ -35,7 +36,7 @@ my $opt = Getopt::Alt->new(
     ]
 );
 
-my $stats = '';
+my $collected = {};
 sub stats {
     my ($self, $name) = @_;
 
@@ -45,10 +46,29 @@ sub stats {
 
     local $CWD = $name;
 
+    my %stats;
+    open my $pipe, '|-', q{git log --format=format:"%ai';'%an';'%ae"};
+
+    while (my $log = <$pipe>) {
+        chomp $log;
+        my ($date, $name, $email) = split q{';'}, $log, 3;
+
+        # dodgy date handling but hay
+        $date =~ s/\s.+$//;
+
+        $stats{count}++;
+        $stats{date}{$date}++;
+        $stats{name}{$name}++;
+        $stats{email}{$email}++;
+    }
+
+    $collected->{$name} = \%stats;
+
     return;
 }
 
 sub stats_end {
+    DumpFile('stats.yml', $collected);
 
     return;
 }
