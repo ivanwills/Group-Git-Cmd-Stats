@@ -58,5 +58,5 @@ subtest 'Changes' => sub {
     );
 };
 
-module_boilerplate_ok('lib/Group/Git/Cmd/Todo.pm');
+module_boilerplate_ok('lib/Group/Git/Cmd/Stats.pm');
 done_testing();

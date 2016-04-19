@@ -3,10 +3,10 @@ use warnings;
 use Module::Build;
 
 my $builder = Module::Build->new(
-    module_name       => 'Group::Git::Cmd::Todo',
+    module_name       => 'Group::Git::Cmd::Stats',
     license           => 'perl',
     dist_author       => 'Ivan Wills <ivan.wills@gmail.com>',
-    dist_version_from => 'lib/Group/Git/Cmd/Todo.pm',
+    dist_version_from => 'lib/Group/Git/Cmd/Stats.pm',
     requires          => {
         'perl'             => 5.008,
         'File::chdir'    => 0,
@@ -19,12 +19,12 @@ my $builder = Module::Build->new(
         'Test::More'     => 0,
         'Test::Warnings' => 0,
     },
-    add_to_cleanup     => [ 'Group-Git-Cmd-Todo-*' ],
+    add_to_cleanup     => [ 'Group-Git-Cmd-Stats-*' ],
     create_license     => 1,
     meta_merge => {
         resources => {
-            repository => 'git://github.com/ivanwills/Group-Git-Cmd-Todo.git',
-            bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Group::Git::Cmd::Todo',
+            repository => 'git://github.com/ivanwills/Group-Git-Cmd-Stats.git',
+            bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Group::Git::Cmd::Stats',
         },
     },
 );

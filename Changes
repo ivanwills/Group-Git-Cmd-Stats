@@ -1,10 +1,5 @@
-Revision history for Group-Git-Cmd-Todo
+Revision history for Group-Git-Cmd-Stats
 
-0.0.2   2015-08-27
-        Updating for release of version 0.0.2
-        Removed creation of makefile (Ivan Wills)
-        Cleaned up wording (Ivan Wills)
-
-0.0.1   2015-05-29
+0.0.1   2016-04-20
         First version, released on an unsuspecting world.
 

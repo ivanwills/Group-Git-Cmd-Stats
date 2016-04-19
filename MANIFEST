@@ -1,6 +1,6 @@
 Build.PL
 Changes
-lib/Group/Git/Cmd/Todo.pm
+lib/Group/Git/Cmd/Stats.pm
 LICENSE
 MANIFEST
 META.json

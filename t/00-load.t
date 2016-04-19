@@ -6,8 +6,8 @@ use Test::More;
 use Test::Warnings;
 
 BEGIN {
-    use_ok( 'Group::Git::Cmd::Todo' );
+    use_ok( 'Group::Git::Cmd::Stats' );
 }
 
-diag( "Testing Group::Git::Cmd::Todo $Group::Git::Cmd::Todo::VERSION, Perl $], $^X" );
+diag( "Testing Group::Git::Cmd::Stats $Group::Git::Cmd::Stats::VERSION, Perl $], $^X" );
 done_testing();

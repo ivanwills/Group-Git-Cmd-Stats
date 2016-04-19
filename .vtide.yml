@@ -1,14 +1,14 @@
---- 
+---
 count: 4
-default: 
+default:
   restart: 0
   wait: 0
-editor: 
-  files: 
-    eg: 
+editor:
+  files:
+    eg:
       - some-file.eg
-name: Group-Git-Cmd-Todo
-terminals: 
+name: Group-Git-Cmd-Stats
+terminals:
   2: []
 
   3: []
