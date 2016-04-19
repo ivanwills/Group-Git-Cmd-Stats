@@ -35,8 +35,8 @@ my $opt = Getopt::Alt->new(
     ]
 );
 
-my $todo = '';
-sub todo {
+my $stats = '';
+sub stats {
     my ($self, $name) = @_;
 
     return unless -d $name;
@@ -45,15 +45,10 @@ sub todo {
 
     local $CWD = $name;
 
-    return if !-f 'TODO.md';
-
-    $todo .= "\n# $name\n\n" . path('TODO.md')->slurp;
-
     return;
 }
 
-sub todo_end {
-    print $todo;
+sub stats_end {
 
     return;
 }
@@ -64,7 +59,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Stats - Group-Git tools to show combined markdown TODOs
+Group::Git::Cmd::Stats - Group-Git tools to show statistics accross many repositories
 
 =head1 VERSION
 
@@ -81,18 +76,18 @@ This documentation refers to Group::Git::Cmd::Stats version 0.0.2
 
 =head1 DESCRIPTION
 
-Adds the sub-command C<todo> to C<group-git>, it concatenates all the
-C<TODO.md> files so you can view a summary of things to do.
+Adds the stats command to L<Group::Git> which allows you to collect statistics
+accross many repositories.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 C<todo ($name)>
+=head2 C<stats ($name)>
 
-Reads the TODO.md file from the repository C<$name>.
+Collects the stats for each repository.
 
-=head2 C<todo_end ()>
+=head2 C<stats_end ()>
 
-Returns the concatenated TODO.md contents for presentation.
+Outputs the stats results.
 
 =head1 DIAGNOSTICS
 
