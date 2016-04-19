@@ -47,7 +47,7 @@ sub stats {
     local $CWD = $name;
 
     my %stats;
-    open my $pipe, '|-', q{git log --format=format:"%ai';'%an';'%ae"};
+    open my $pipe, '-|', q{git log --format=format:"%ai';'%an';'%ae"};
 
     while (my $log = <$pipe>) {
         chomp $log;
