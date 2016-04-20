@@ -90,7 +90,7 @@ sub stats {
 }
 
 sub stats_end {
-    DumpFile('stats.yml', $collected);
+    DumpFile('.stats/collated.yml', $collected);
 
     my $type = $opt->opt->by_email ? 'email'
         : $opt->opt->by_name       ? 'name'
