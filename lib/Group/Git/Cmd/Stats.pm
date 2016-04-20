@@ -29,9 +29,8 @@ my $opt = Getopt::Alt->new(
         },
     },
     [
-        'by_email|by-email|e',
-        'by_name|by-name|n',
-        'by_date|by-date|d',
+        'by|b=s',
+        'of|o=s',
         'verbose|v+',
         'quiet|q!',
     ]
@@ -75,10 +74,27 @@ sub stats {
         # dodgy date handling but hay
         $date =~ s/\s.+$//;
 
-        $stats{count}++;
-        $stats{date}{$date}++;
-        $stats{name}{$name}++;
-        $stats{email}{$email}++;
+        $stats{count}{commits}++;
+        $stats{date }{commits}{$date}++;
+        $stats{name }{commits}{$name}++;
+        $stats{email}{commits}{$email}++;
+
+        open my $show, '-|', qq{git show $id | grep -v '^[+][+][+]|^[-][-][-]' | grep -v '^[^-+]'};
+        my ($added, $removed) = (0, 0);
+        while (my $change = <$show>) {
+            $added++   if $change =~ /^[+]/;
+            $removed++ if $change =~ /^[-]/;
+        }
+
+        $stats{count}{added} += $added;
+        $stats{date }{added}{$date} += $added;
+        $stats{name }{added}{$name} += $added;
+        $stats{email}{added}{$email} += $added;
+
+        $stats{count}{removed} += $removed;
+        $stats{date }{removed}{$date} += $removed;
+        $stats{name }{removed}{$name} += $removed;
+        $stats{email}{removed}{$email} += $removed;
     }
 
     $cache = $dir->path('.stats', $newest . '.yml');
@@ -92,15 +108,20 @@ sub stats {
 sub stats_end {
     DumpFile('.stats/collated.yml', $collected);
 
-    my $type = $opt->opt->by_email ? 'email'
-        : $opt->opt->by_name       ? 'name'
-        : $opt->opt->by_date       ? 'date'
-        :                            '';
+    my $type = $opt->opt->by eq 'email' ? 'email'
+        : $opt->opt->by eq 'name'       ? 'name'
+        : $opt->opt->by eq 'date'       ? 'date'
+        :                                 die "Unknown --by '" . $opt->opt->by . "'! (must be one of email, name or date)\n";
+
+    my $of = $opt->opt->of eq 'commits' ? 'commits'
+        : $opt->opt->of eq 'additions'  ? 'added'
+        : $opt->opt->of eq 'removals'   ? 'removed'
+        :                                 die "Unknown --of '" . $opt->opt->of . "'! (must be one of commits, additions or removals)\n";
 
     my %stats;
     for my $repo (keys %{ $collected }) {
-        for my $item (keys %{ $collected->{$repo}{$type} }) {
-            $stats{$item} += $collected->{$repo}{$type}{$item};
+        for my $item (keys %{ $collected->{$repo}{$type}{$of} }) {
+            $stats{$item} += $collected->{$repo}{$type}{$of}{$item};
         }
     }
 
