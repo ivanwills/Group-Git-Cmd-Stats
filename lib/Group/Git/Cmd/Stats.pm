@@ -25,7 +25,8 @@ my $opt = Getopt::Alt->new(
         helper  => 1,
         help    => __PACKAGE__,
         default => {
-            min => 1,
+            by => 'name',
+            of => 'commits',
         },
     },
     [
