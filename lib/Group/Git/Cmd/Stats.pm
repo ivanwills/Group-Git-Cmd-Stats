@@ -75,7 +75,7 @@ sub stats {
         # dodgy date handling but hay
         $date =~ s/\s.+$//;
 
-        $stats{count}{commits}++;
+        $stats{count}{commits}{total}++;
         $stats{date }{commits}{$date}++;
         $stats{name }{commits}{$name}++;
         $stats{email}{commits}{$email}++;
@@ -87,14 +87,14 @@ sub stats {
             $removed++ if $change =~ /^[-]/;
         }
 
-        $stats{count}{added} += $added;
-        $stats{date }{added}{$date} += $added;
-        $stats{name }{added}{$name} += $added;
+        $stats{count}{added}{total}  += $added;
+        $stats{date }{added}{$date}  += $added;
+        $stats{name }{added}{$name}  += $added;
         $stats{email}{added}{$email} += $added;
 
-        $stats{count}{removed} += $removed;
-        $stats{date }{removed}{$date} += $removed;
-        $stats{name }{removed}{$name} += $removed;
+        $stats{count}{removed}{total}  += $removed;
+        $stats{date }{removed}{$date}  += $removed;
+        $stats{name }{removed}{$name}  += $removed;
         $stats{email}{removed}{$email} += $removed;
     }
 
@@ -113,6 +113,7 @@ sub stats_end {
         my $type = $opt->opt->by eq 'email' ? 'email'
             : $opt->opt->by eq 'name'       ? 'name'
             : $opt->opt->by eq 'date'       ? 'date'
+            : $opt->opt->by eq 'total'      ? 'total'
             :                                 die "Unknown --by '" . $opt->opt->by . "'! (must be one of email, name or date)\n";
 
         my $of = $opt->opt->of eq 'commits' ? 'commits'
