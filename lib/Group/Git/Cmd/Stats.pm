@@ -107,29 +107,31 @@ sub stats {
 }
 
 sub stats_end {
-    DumpFile('.stats/collated.yml', $collected);
+    if ( -d '.stats' ) {
+        DumpFile('.stats/collated.yml', $collected);
 
-    my $type = $opt->opt->by eq 'email' ? 'email'
-        : $opt->opt->by eq 'name'       ? 'name'
-        : $opt->opt->by eq 'date'       ? 'date'
-        :                                 die "Unknown --by '" . $opt->opt->by . "'! (must be one of email, name or date)\n";
+        my $type = $opt->opt->by eq 'email' ? 'email'
+            : $opt->opt->by eq 'name'       ? 'name'
+            : $opt->opt->by eq 'date'       ? 'date'
+            :                                 die "Unknown --by '" . $opt->opt->by . "'! (must be one of email, name or date)\n";
 
-    my $of = $opt->opt->of eq 'commits' ? 'commits'
-        : $opt->opt->of eq 'additions'  ? 'added'
-        : $opt->opt->of eq 'removals'   ? 'removed'
-        :                                 die "Unknown --of '" . $opt->opt->of . "'! (must be one of commits, additions or removals)\n";
+        my $of = $opt->opt->of eq 'commits' ? 'commits'
+            : $opt->opt->of eq 'additions'  ? 'added'
+            : $opt->opt->of eq 'removals'   ? 'removed'
+            :                                 die "Unknown --of '" . $opt->opt->of . "'! (must be one of commits, additions or removals)\n";
 
-    my %stats;
-    for my $repo (keys %{ $collected }) {
-        for my $item (keys %{ $collected->{$repo}{$type}{$of} }) {
-            $stats{$item} += $collected->{$repo}{$type}{$of}{$item};
+        my %stats;
+        for my $repo (keys %{ $collected }) {
+            for my $item (keys %{ $collected->{$repo}{$type}{$of} }) {
+                $stats{$item} += $collected->{$repo}{$type}{$of}{$item};
+            }
         }
-    }
 
-    my @items = sort { $stats{$a} <=> $stats{$b} } keys %stats;
-    my $max   = max map {length $_} @items;
-    for my $item (@items) {
-        printf "%-${max}s %d\n", $item, $stats{$item};
+        my @items = sort { $stats{$a} <=> $stats{$b} } keys %stats;
+        my $max   = max map {length $_} @items;
+        for my $item (@items) {
+            printf "%-${max}s %d\n", $item, $stats{$item};
+        }
     }
 
     return;
