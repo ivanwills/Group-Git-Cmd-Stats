@@ -51,14 +51,26 @@ sub stats {
 
     $opt->process if !%{ $opt->opt || {} };
 
+    my $dir = path($CWD);
+
     local $CWD = $name;
 
+    my $newest = qx{git log -n1 --format=format:"%H"};
+    chomp $newest;
+    my $cache = $dir->path('.stats', $newest . '.yml');
+    $cache->parent->mkpath;
+    if ( -f $cache ) {
+        $collected->{$name} = LoadFile($cache);
+        return;
+    }
+
     my %stats;
-    open my $pipe, '-|', q{git log --format=format:"%ai';'%an';'%ae"};
+    open my $pipe, '-|', q{git log --format=format:"%H';'%ai';'%an';'%ae"};
 
     while (my $log = <$pipe>) {
         chomp $log;
-        my ($date, $name, $email) = split q{';'}, $log, 3;
+        my ($id, $date, $name, $email) = split q{';'}, $log, 4;
+        $newest ||= $id;
 
         # dodgy date handling but hay
         $date =~ s/\s.+$//;
@@ -68,6 +80,9 @@ sub stats {
         $stats{name}{$name}++;
         $stats{email}{$email}++;
     }
+
+    $cache = $dir->path('.stats', $newest . '.yml');
+    DumpFile($cache, \%stats);
 
     $collected->{$name} = \%stats;
 
