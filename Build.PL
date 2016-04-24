@@ -8,12 +8,14 @@ my $builder = Module::Build->new(
     dist_author       => 'Ivan Wills <ivan.wills@gmail.com>',
     dist_version_from => 'lib/Group/Git/Cmd/Stats.pm',
     requires          => {
-        'perl'             => 5.008,
+        'perl'           => '5.006',
         'File::chdir'    => 0,
         'Getopt::Alt'    => '0.3.1',
+        'List::Util'     => '1.41',
         'Moose::Role'    => '2.1',
         'Path::Tiny'     => '0.06',
         'version'        => '0.9902',
+        'YAML::Syck'     => '1.29',
     },
     build_requires => {
         'Test::More'     => 0,
