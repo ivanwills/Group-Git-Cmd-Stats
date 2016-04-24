@@ -37,7 +37,7 @@ my $opt = Getopt::Alt->new(
     ]
 );
 
-sub start_start {
+sub stats_start {
     $opt->process;
 
     return;
@@ -169,6 +169,10 @@ accross many repositories.
 =head2 C<stats ($name)>
 
 Collects the stats for each repository.
+
+=head2 C<stats_start ()>
+
+Initialises stats
 
 =head2 C<stats_end ()>
 
