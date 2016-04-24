@@ -1,6 +1,9 @@
 Revision history for Group-Git-Cmd-Stats
 
 0.0.1   2016-04-20
+        Fixed dependencies (Ivan Wills)
+        Fixed version (Ivan Wills)
+        Added changes (Ivan Wills)
         Fixed method name (Ivan Wills)
         Added .stats dir to be skipped (Ivan Wills)
         Fixed totals (Ivan Wills)
