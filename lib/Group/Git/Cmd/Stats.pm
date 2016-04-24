@@ -18,7 +18,7 @@ use Path::Tiny;
 use Getopt::Alt;
 use YAML::Syck;
 
-our $VERSION = version->new('0.0.2');
+our $VERSION = version->new('0.0.1');
 
 my $opt = Getopt::Alt->new(
     {
@@ -148,7 +148,7 @@ Group::Git::Cmd::Stats - Group-Git tools to show statistics accross many reposit
 
 =head1 VERSION
 
-This documentation refers to Group::Git::Cmd::Stats version 0.0.2
+This documentation refers to Group::Git::Cmd::Stats version 0.0.1
 
 =head1 SYNOPSIS
 
