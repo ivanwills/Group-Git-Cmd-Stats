@@ -1,5 +1,20 @@
 Revision history for Group-Git-Cmd-Stats
 
 0.0.1   2016-04-20
-        First version, released on an unsuspecting world.
-
+        Fixed method name (Ivan Wills)
+        Added .stats dir to be skipped (Ivan Wills)
+        Fixed totals (Ivan Wills)
+        Added ignoring .stats directory (Ivan Wills)
+        Added protection for edge case where there are no git repos found (Ivan Wills)
+        Added default values (Ivan Wills)
+        Added collecting line additions and deletions (Ivan Wills)
+        Moved collated stats to .stats directory (Ivan Wills)
+        Added caching results (Ivan Wills)
+        Outputting something sensible (Ivan Wills)
+        Fixed pipe (Ivan Wills)
+        License updated (Ivan Wills)
+        Cleared out the rest (Ivan Wills)
+        Starting to collect stats (Ivan Wills)
+        Removed more old TODO references (Ivan Wills)
+        Updated readme (Ivan Wills)
+        Initial commit (Ivan Wills)
