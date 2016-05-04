@@ -55,30 +55,24 @@ sub stats {
 
     local $CWD = $name;
 
-    my $newest = qx{git log -n1 --format=format:"%H"};
-    chomp $newest;
-    my $cache = $dir->path('.stats', $newest . '.yml');
+    my $cache = $dir->path('.stats', $name . '.yml');
     $cache->parent->mkpath;
+    my %stats;
+
     if ( -f $cache ) {
-        $collected->{$name} = LoadFile($cache);
-        return;
+        %stats = %{ LoadFile($cache) };
     }
 
-    my %stats;
     open my $pipe, '-|', q{git log --format=format:"%H';'%ai';'%an';'%ae"};
 
     while (my $log = <$pipe>) {
         chomp $log;
         my ($id, $date, $name, $email) = split q{';'}, $log, 4;
-        $newest ||= $id;
+
+        last if $stats{$id};
 
         # dodgy date handling but hay
         $date =~ s/\s.+$//;
-
-        $stats{count}{commits}{total}++;
-        $stats{date }{commits}{$date}++;
-        $stats{name }{commits}{$name}++;
-        $stats{email}{commits}{$email}++;
 
         open my $show, '-|', qq{git show $id | grep -v '^[+][+][+]|^[-][-][-]' | grep -v '^[^-+]'};
         my ($added, $removed) = (0, 0);
@@ -87,18 +81,16 @@ sub stats {
             $removed++ if $change =~ /^[-]/;
         }
 
-        $stats{count}{added}{total}  += $added;
-        $stats{date }{added}{$date}  += $added;
-        $stats{name }{added}{$name}  += $added;
-        $stats{email}{added}{$email} += $added;
-
-        $stats{count}{removed}{total}  += $removed;
-        $stats{date }{removed}{$date}  += $removed;
-        $stats{name }{removed}{$name}  += $removed;
-        $stats{email}{removed}{$email} += $removed;
+        $stats{$id} = {
+            name    => $name,
+            email   => $email,
+            date    => $date,
+            added   => $added,
+            removed => $removed,
+        };
     }
 
-    $cache = $dir->path('.stats', $newest . '.yml');
+    $cache = $dir->path('.stats', $name . '.yml');
     DumpFile($cache, \%stats);
 
     $collected->{$name} = \%stats;
