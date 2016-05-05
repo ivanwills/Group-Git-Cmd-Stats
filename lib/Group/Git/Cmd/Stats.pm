@@ -115,8 +115,8 @@ sub stats_end {
 
         my %stats;
         for my $repo (keys %{ $collected }) {
-            for my $item (keys %{ $collected->{$repo}{$type}{$of} }) {
-                $stats{$item} += $collected->{$repo}{$type}{$of}{$item};
+            for my $id (keys %{ $collected->{$repo} }) {
+                $stats{ $collected->{$repo}{$id}{$type} } += $collected->{$repo}{$id}{$of} // 1;
             }
         }
 
