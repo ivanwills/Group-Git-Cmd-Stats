@@ -106,6 +106,7 @@ sub stats_end {
             : $opt->opt->by eq 'name'       ? 'name'
             : $opt->opt->by eq 'date'       ? 'date'
             : $opt->opt->by eq 'total'      ? 'total'
+            : $opt->opt->by eq 'repo'       ? ''
             :                                 die "Unknown --by '" . $opt->opt->by . "'! (must be one of email, name or date)\n";
 
         my $of = $opt->opt->of eq 'commits' ? 'commits'
@@ -116,7 +117,7 @@ sub stats_end {
         my %stats;
         for my $repo (keys %{ $collected }) {
             for my $id (keys %{ $collected->{$repo} }) {
-                $stats{ $collected->{$repo}{$id}{$type} } += $collected->{$repo}{$id}{$of} // 1;
+                $stats{ $collected->{$repo}{$id}{$type} // $repo } += $collected->{$repo}{$id}{$of} // 1;
             }
         }
 
