@@ -1,5 +1,15 @@
 Revision history for Group-Git-Cmd-Stats
 
+0.0.2   2016-05-08
+        Updating for release of version 0.0.2
+        Added ability to give stats for repositories them selves (Ivan Wills)
+        Increased the minimum perl version (Ivan Wills)
+        Fixed generated stats (Ivan Wills)
+        Getting the stats in a better (more flexable) maner (Ivan Wills)
+        Added TODO reminder file (Ivan Wills)
+        Adding running tests (Ivan Wills)
+        Added extra commits (Ivan Wills)
+
 0.0.1   2016-04-20
         Fixed dependencies (Ivan Wills)
         Fixed version (Ivan Wills)
