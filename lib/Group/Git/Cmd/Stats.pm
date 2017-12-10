@@ -51,7 +51,9 @@ sub stats {
 
     $opt->process if !%{ $opt->opt || {} };
 
-    my $dir = path($CWD);
+    my $dir      = path($CWD);
+    my $stats    = $dir->path('.stats');
+    my $log_file = $stats->path('error.log');
 
     local $CWD = $name;
 
@@ -74,11 +76,16 @@ sub stats {
         # dodgy date handling but hay
         $date =~ s/\s.+$//;
 
-        open my $show, '-|', qq{git show $id | grep -v '^[+][+][+]|^[-][-][-]' | grep -v '^[^-+]'};
-        my ($added, $removed) = (0, 0);
+        unlink $log_file if -f $log_file;
+        open my $show, '-|', qq{git show '$id' 2> $log | grep -Pv '^[+][+][+]|^[-][-][-]' | grep -Pv '^[^-+]'};
+        my ($added, $removed, $total, $lines) = (0, 0, 0, 0);
         while (my $change = <$show>) {
-            $added++   if $change =~ /^[+]/;
-            $removed++ if $change =~ /^[-]/;
+            $total = $change =~ /^[+]/ ? $added++ : $removed++;
+            $lines++;
+        }
+        if ( -s $log_file ) {
+            warn qq{git show $id 2> $log_file | grep -v '^[+][+][+]|^[-][-][-]' | grep -v '^[^-+]'\n};
+            return;
         }
 
         $stats{$id} = {
@@ -87,10 +94,10 @@ sub stats {
             date    => $date,
             added   => $added,
             removed => $removed,
+            lines   => $lines,
         };
     }
 
-    $cache = $dir->path('.stats', $name . '.yml');
     DumpFile($cache, \%stats);
 
     $collected->{$name} = \%stats;
