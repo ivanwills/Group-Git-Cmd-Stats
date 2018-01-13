@@ -144,7 +144,7 @@ __END__
 
 =head1 NAME
 
-Group::Git::Cmd::Stats - Group-Git tools to show statistics accross many repositories
+Group::Git::Cmd::Stats - Group-Git tools to show statistics across many repositories
 
 =head1 VERSION
 
@@ -162,7 +162,7 @@ This documentation refers to Group::Git::Cmd::Stats version 0.0.2
 =head1 DESCRIPTION
 
 Adds the stats command to L<Group::Git> which allows you to collect statistics
-accross many repositories.
+across many repositories.
 
 =head1 SUBROUTINES/METHODS
 
@@ -172,7 +172,7 @@ Collects the stats for each repository.
 
 =head2 C<stats_start ()>
 
-Initialises stats
+Initializes stats
 
 =head2 C<stats_end ()>
 
